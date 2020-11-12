@@ -3,8 +3,9 @@ guid: fea61251b4225d747a329c6864238010
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
-  executionOrder: 0
+  defaultReferences:
+  - PipeHeadSprite: {fileID: 21300000, guid: 165625e1f34d18e419d1c11d5ac1e5c6, type: 3}
+  executionOrder: -20
   icon: {instanceID: 0}
   userData: 
   assetBundleName: 

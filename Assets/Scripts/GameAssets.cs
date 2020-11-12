@@ -14,5 +14,7 @@ public class GameAssets : MonoBehaviour
         instance = this;
     }
 
-    
+    public Sprite PipeHeadSprite;
+    public Transform PFPipeHead;
+    public Transform PFPipeBody;
 }
