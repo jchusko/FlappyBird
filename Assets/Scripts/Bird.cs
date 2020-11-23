@@ -6,6 +6,7 @@ public class Bird : MonoBehaviour
 {
     private Rigidbody2D rigidbody2D;
     private const float JUMP_AMOUNT = 100f;
+    
     private void Awake()
     {
         rigidbody2D = GetComponent<Rigidbody2D>();
@@ -30,6 +31,6 @@ public class Bird : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-    
+        rigidbody2D.bodyType = RigidbodyType2D.Static;
     }
 }
