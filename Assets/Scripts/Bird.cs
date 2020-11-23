@@ -1,15 +1,22 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Bird : MonoBehaviour
 {
+    public event EventHandler OnGameOver;
+
+    private static Bird instance;
+    public static Bird GetInstance() { return instance; }
+
     private Rigidbody2D rigidbody2D;
     private const float JUMP_AMOUNT = 100f;
-    
+
     private void Awake()
     {
         rigidbody2D = GetComponent<Rigidbody2D>();
+        instance = this;
     }
     private void Start()
     {
@@ -32,5 +39,6 @@ public class Bird : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collider)
     {
         rigidbody2D.bodyType = RigidbodyType2D.Static;
+        if (OnGameOver != null) { OnGameOver(this, EventArgs.Empty); }
     }
 }
