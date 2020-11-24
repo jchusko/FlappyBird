@@ -14,8 +14,8 @@ public class GameOver : MonoBehaviour
     private void Awake()
     {
         scoreText = transform.Find("Score").GetComponent<Text>();
-        transform.Find("RetryButton").GetComponent<Button>().onClick.AddListener(RestartGame);
 
+        transform.Find("RetryButton").GetComponent<Button>().onClick.AddListener(RestartGame);
         transform.Find("MainMenuButton").GetComponent<Button>().onClick.AddListener(() => Loader.Load(Scenes.MainMenu));
 
         Bird.GetInstance().OnGameOver += OnGameOver;

@@ -1,6 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+using Scripts.Enums;
+
 
 public class GameAssets : MonoBehaviour
 {
@@ -17,4 +21,13 @@ public class GameAssets : MonoBehaviour
     public Sprite PipeHeadSprite;
     public Transform PFPipeHead;
     public Transform PFPipeBody;
+
+    public SoundAudioClip[] SoundArray;
+
+    [Serializable]
+    public class SoundAudioClip
+    {
+        public Sounds sound;
+        public AudioClip audioClip;
+    }
 }
