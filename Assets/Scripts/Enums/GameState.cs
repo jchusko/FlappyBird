@@ -1,7 +1,8 @@
 namespace Scripts.Enums
 {
-    enum State
+    enum GameState
     {
+        WaitingToStart,
         Playing,
         GameOver
     }

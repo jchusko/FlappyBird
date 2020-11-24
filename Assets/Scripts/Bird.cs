@@ -3,10 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using Scripts.Enums;
+
 public class Bird : MonoBehaviour
 {
     public event EventHandler OnGameOver;
+    public event EventHandler OnStartedPlaying;
 
+    private GameState state;
+    
     private static Bird instance;
     public static Bird GetInstance() { return instance; }
 
@@ -17,6 +22,8 @@ public class Bird : MonoBehaviour
     {
         rigidbody2D = GetComponent<Rigidbody2D>();
         instance = this;
+        rigidbody2D.bodyType = RigidbodyType2D.Static;
+        state = GameState.WaitingToStart;
     }
     private void Start()
     {
@@ -26,9 +33,27 @@ public class Bird : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)) {
-            Jump();
+        switch(state)
+        {
+            case GameState.WaitingToStart:
+                if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)) {
+                    state = GameState.Playing;
+                    rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
+                    Jump();
+                    if (OnStartedPlaying != null) {  OnStartedPlaying(this, EventArgs.Empty); }
+                }
+                break;
+            case GameState.Playing:
+                if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)) {
+                    Jump();
+                }
+                break;
+            case GameState.GameOver:
+                break;
+            default:
+                break;
         }
+        
     }
 
     private void Jump() 

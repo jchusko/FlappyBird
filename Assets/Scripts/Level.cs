@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
+using CodeMonkey.Utils;
 using Scripts.Enums;
 
 public class Level : MonoBehaviour
 {
-    private State state;
+    private GameState state;
     private const float CAMERA_ORTHO_SIZE = 50;
     private const float PIPE_WIDTH = 7.8f;
     private const float PIPE_HEAD_OFFSET = 1.8f;
@@ -27,7 +29,7 @@ public class Level : MonoBehaviour
 
     private void Awake()
     {
-        state = State.Playing;
+        state = GameState.WaitingToStart;
         pipeList = new List<Pipe>();
         pipeSpawnTimerMax = 1.0f;
         pipesSpawned = 0;
@@ -38,17 +40,23 @@ public class Level : MonoBehaviour
 
     private void Start()
     {
-        Bird.GetInstance().OnGameOver += GameOver;
+        Bird.GetInstance().OnGameOver += OnGameOver;
+        Bird.GetInstance().OnStartedPlaying += OnStartedPlaying;
+    }
+    
+    private void OnStartedPlaying(object sender, System.EventArgs e)
+    {
+        state = GameState.Playing;
     }
 
-    private void GameOver(object sender, System.EventArgs e)
+    private void OnGameOver(object sender, System.EventArgs e)
     {
-        state = State.GameOver;
+        state = GameState.GameOver;        
     }
 
     private void Update()
     {
-        if (state == State.Playing)
+        if (state == GameState.Playing)
         {
             PipeMovement();
             HandlePipeSpawning();
