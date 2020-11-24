@@ -13,35 +13,33 @@ public class GameOver : MonoBehaviour
 
     private void Awake()
     {
-        Debug.Log("Awaking GO Window");
         scoreText = transform.Find("Score").GetComponent<Text>();
         transform.Find("RetryButton").GetComponent<Button>().onClick.AddListener(RestartGame);
+
+        transform.Find("MainMenuButton").GetComponent<Button>().onClick.AddListener(() => Loader.Load(Scenes.MainMenu));
+
         Bird.GetInstance().OnGameOver += OnGameOver;
         Hide();
     }
 
     private void RestartGame()
     {
-        Debug.Log("Restarting Game");
         Loader.Load(Scenes.GameScene);
     }
 
     private void OnGameOver(object sender, System.EventArgs e)
     {
-        Debug.Log("Game Over");
         scoreText.text = Level.GetInstance().GetPipesPassed().ToString();
         Show();
     }
 
     private void Hide() 
     {
-        Debug.Log("Hiding GO Window");
         gameObject.SetActive(false);
     }
 
     private void Show()
     {
-        Debug.Log("Showing GO Window");
         gameObject.SetActive(true);
     }
 }
