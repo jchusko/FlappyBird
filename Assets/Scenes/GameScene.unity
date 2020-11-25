@@ -1023,6 +1023,9 @@ MonoBehaviour:
   PFPipeHead: {fileID: 1460976069496538644, guid: 1107e847a6234cc468ba14eaaad83b9d, type: 3}
   PFPipeBody: {fileID: 7704018822066457901, guid: 0e56f500e85810d448c961bf06dd825c, type: 3}
   PFGround: {fileID: 8671880790223906982, guid: 15f6a095a072b2d4bab02fb8dc8fe63e, type: 3}
+  PFCloud_1: {fileID: 5487831341741920194, guid: 60a6847f8d22e0a4fb6db1dde3267d86, type: 3}
+  PFCloud_2: {fileID: 1459612445741701249, guid: e314111fb03eb314fa309662bb6c94b3, type: 3}
+  PFCloud_3: {fileID: 1375476878688212079, guid: cc3eaa0b80a3215418aa2fd44c436332, type: 3}
   SoundArray:
   - sound: 0
     audioClip: {fileID: 8300000, guid: 98180c6e462e607418d56d13fd9ec3ca, type: 3}
