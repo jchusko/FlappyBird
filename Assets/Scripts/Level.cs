@@ -88,7 +88,7 @@ public class Level : MonoBehaviour
 
     private void SpawnInitialClouds()
     {
-        cloudList.Add(Instantiate(GameAssets.GetInstance().PFCloud_1, new Vector3(-75f, 20f, 0f), Quaternion.identity));
+        cloudList.Add(Instantiate(GameAssets.GetInstance().PFCloud_1, new Vector3(-75f, 15f, 0f), Quaternion.identity));
         cloudList.Add(Instantiate(GameAssets.GetInstance().PFCloud_2, new Vector3(0f, 0f, 0f), Quaternion.identity));
         cloudList.Add(Instantiate(GameAssets.GetInstance().PFCloud_3, new Vector3(75f, 30f, 0f), Quaternion.identity));
     }
@@ -97,7 +97,7 @@ public class Level : MonoBehaviour
     {
         foreach(var cloud in cloudList)
         {
-            cloud.position += new Vector3(-1, 0, 0) * PIPE_MOVEMENT_SPEED * Time.deltaTime;
+            cloud.position += new Vector3(-1, 0, 0) * PIPE_MOVEMENT_SPEED * Time.deltaTime * 0.5f;
             if(cloud.position.x < CLOUD_DESTROY_X_POSITION) 
             { 
                 cloud.transform.position = new Vector3(CLOUD_SPAWN_X_POSITION, cloud.position.y, 0); 
