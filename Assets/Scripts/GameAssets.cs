@@ -1,4 +1,4 @@
-﻿using System;
+﻿    using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,6 +21,10 @@ public class GameAssets : MonoBehaviour
     public Sprite PipeHeadSprite;
     public Transform PFPipeHead;
     public Transform PFPipeBody;
+    public Transform PFGround;
+    public Transform PFCloud_1;
+    public Transform PFCloud_2;
+    public Transform PFCloud_3;
 
     public SoundAudioClip[] SoundArray;
 

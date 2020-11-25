@@ -10,10 +10,12 @@ using CodeMonkey.Utils;
 public class GameOver : MonoBehaviour
 {
     private Text scoreText;
+    private Text highScoreText;
 
     private void Awake()
     {
         scoreText = transform.Find("Score").GetComponent<Text>();
+        highScoreText = transform.Find("HighScore").GetComponent<Text>();
 
         transform.Find("RetryButton").GetComponent<Button>().onClick.AddListener(RestartGame);
         transform.Find("MainMenuButton").GetComponent<Button>().onClick.AddListener(() => Loader.Load(Scenes.MainMenu));
@@ -30,6 +32,16 @@ public class GameOver : MonoBehaviour
     private void OnGameOver(object sender, System.EventArgs e)
     {
         scoreText.text = Level.GetInstance().GetPipesPassed().ToString();
+
+        if(Level.GetInstance().GetPipesPassed() >= ScoreHandler.GetHighScore())
+        {
+            highScoreText.text = "New High Score!";
+        }
+        else
+        {
+            highScoreText.text = "High Score: " + ScoreHandler.GetHighScore();
+        }
+
         Show();
     }
 

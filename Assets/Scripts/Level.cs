@@ -15,10 +15,25 @@ public class Level : MonoBehaviour
     private const float PIPE_MOVEMENT_SPEED = 30f;
     private const float PIPE_DESTROY_X_POSITION = -100f;
     private const float PIPE_SPAWN_X_POSITION = 100f;
+
+    private const float GROUND_SPAWN_X_POSITION = 183f;
+    private const float GROUND_DESTROY_X_POSITION = -183f;
+    private const float GROUND_SPAWN_Y_POSITION = -49f;
+    
+    private const float CLOUD_SPAWN_X_POSITION = 100f;
+    private const float CLOUD_DESTROY_X_POSITION = -100f;
+
     private const float BIRD_X_POSITION = 0f;
 
     private static Level instance;
     public static Level GetInstance() { return instance; }
+
+    
+    private List<Transform> groundList;
+
+    private List<Transform> cloudList;
+    private float cloudSpawnTimer;
+    private float cloudSpawnTimerMax;
 
     private List<Pipe> pipeList;
     private int pipesSpawned;
@@ -30,7 +45,11 @@ public class Level : MonoBehaviour
     private void Awake()
     {
         state = GameState.WaitingToStart;
+
         pipeList = new List<Pipe>();
+        groundList = new List<Transform>();
+        cloudList = new List<Transform>();
+        
         pipeSpawnTimerMax = 1.0f;
         pipesSpawned = 0;
         pipesPassed = 0;
@@ -42,6 +61,8 @@ public class Level : MonoBehaviour
     {
         Bird.GetInstance().OnGameOver += OnGameOver;
         Bird.GetInstance().OnStartedPlaying += OnStartedPlaying;
+        SpawnInitialGround();
+        SpawnInitialClouds();
     }
     
     private void OnStartedPlaying(object sender, System.EventArgs e)
@@ -58,8 +79,49 @@ public class Level : MonoBehaviour
     {
         if (state == GameState.Playing)
         {
-            PipeMovement();
+            HandlePipeMovement();
             HandlePipeSpawning();
+            HandleGround();
+            HandleClouds();
+        }
+    }
+
+    private void SpawnInitialClouds()
+    {
+        cloudList.Add(Instantiate(GameAssets.GetInstance().PFCloud_1, new Vector3(-75f, 20f, 0f), Quaternion.identity));
+        cloudList.Add(Instantiate(GameAssets.GetInstance().PFCloud_2, new Vector3(0f, 0f, 0f), Quaternion.identity));
+        cloudList.Add(Instantiate(GameAssets.GetInstance().PFCloud_3, new Vector3(75f, 30f, 0f), Quaternion.identity));
+    }
+
+    private void HandleClouds()
+    {
+        foreach(var cloud in cloudList)
+        {
+            cloud.position += new Vector3(-1, 0, 0) * PIPE_MOVEMENT_SPEED * Time.deltaTime;
+            if(cloud.position.x < CLOUD_DESTROY_X_POSITION) 
+            { 
+                cloud.transform.position = new Vector3(CLOUD_SPAWN_X_POSITION, cloud.position.y, 0); 
+            }
+        }
+    }
+
+    private void SpawnInitialGround()
+    {
+        groundList.Add(Instantiate(GameAssets.GetInstance().PFGround, new Vector3(0f,    GROUND_SPAWN_Y_POSITION, 0f), Quaternion.identity));
+        groundList.Add(Instantiate(GameAssets.GetInstance().PFGround, new Vector3(91.5f, GROUND_SPAWN_Y_POSITION, 0f), Quaternion.identity));
+        groundList.Add(Instantiate(GameAssets.GetInstance().PFGround, new Vector3(-91.5f,GROUND_SPAWN_Y_POSITION, 0f), Quaternion.identity));
+        groundList.Add(Instantiate(GameAssets.GetInstance().PFGround, new Vector3(183f,  GROUND_SPAWN_Y_POSITION, 0f), Quaternion.identity));
+    }
+    private void HandleGround()
+    {
+        foreach(var ground in groundList)
+        {
+            ground.position += new Vector3(-1, 0, 0) * PIPE_MOVEMENT_SPEED * Time.deltaTime;
+
+            if(ground.position.x < GROUND_DESTROY_X_POSITION)
+            {
+                ground.transform.position = new Vector3(GROUND_SPAWN_X_POSITION, GROUND_SPAWN_Y_POSITION, 0f);
+            }
         }
     }
 
@@ -83,7 +145,7 @@ public class Level : MonoBehaviour
         }
     } 
 
-    private void PipeMovement()
+    private void HandlePipeMovement()
     {
         for( int i=0; i<pipeList.Count; ++i)
         {
